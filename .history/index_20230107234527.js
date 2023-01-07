@@ -6,9 +6,9 @@ const app = express();
 const { PORT, MONGO_URI } = process.env;
 const ip = require("ip");
 
+console.log("ip : ", ip);
 mongoose.Promise = global.Promise;
 
-console.log("ip : ", ip.address());
 mongoose
   .set("strictQuery", true)
   .connect(MONGO_URI)
