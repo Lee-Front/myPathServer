@@ -29,11 +29,6 @@ app.listen(PORT, function () {
   console.log("서버실행 완료");
 });
 
-app.get("/api", function (req, res) {
-  console.log("aaaa");
-  res.send("main");
-});
-
 app.use("/api/path", pathRouter);
 app.use("/api/editor", editorRouter);
 
