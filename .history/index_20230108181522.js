@@ -9,7 +9,6 @@ const ip = require("ip");
 mongoose.Promise = global.Promise;
 
 console.log("ip : ", ip.address);
-console.log("PORT : ", PORT);
 mongoose
   .set("strictQuery", true)
   .connect(MONGO_URI)
