@@ -7,7 +7,10 @@ router.get("/getList", async function (req, res) {
   const tagList = await tagBlockModel
     .find({ pathId: req.query.pathId })
     .select("-_id")
+    .sort({ sort: 1 })
     .exec();
+
+  console.log("tagList: ", tagList);
 
   let count = 0;
   const newList = [];

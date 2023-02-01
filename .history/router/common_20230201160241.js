@@ -54,10 +54,10 @@ router.post("/upload", upload.single("img"), (req, res) => {
         uuid: uuid,
         fileName: originalName, //original File Name
         extension: extension,
-      });
+      }).select("-_id");
 
       fileData.save();
-      res.status(200).json([fileData]);
+      res.status(200).json(fileData);
     });
 });
 

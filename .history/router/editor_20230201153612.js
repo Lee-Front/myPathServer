@@ -4,24 +4,26 @@ const tagBlockModel = require("../models/tagBlock");
 const fileDataModel = require("../models/fileData");
 
 router.get("/getList", async function (req, res) {
+  console.log("1");
   const tagList = await tagBlockModel
     .find({ pathId: req.query.pathId })
     .select("-_id")
+    .sort({ sort: 1 })
     .exec();
 
   let count = 0;
   const newList = [];
   tagList.map(async (data) => {
     if (data.tagName === "image") {
-      const files = await fileDataModel
-        .findOne({ uuid: data.uuid })
-        .sort({ fileId: -1 })
-        .exec();
+      console.log("2");
+      const files = await fileDataModel.find({ uuid: data.uuid }).exec();
+      console.log("3");
       data = data.toJSON();
-      data.files = [files];
+      data.files = files;
     }
-    newList.push(data);
     count++;
+
+    newList.push(data);
 
     if (count === tagList.length) {
       res.status(200).send(newList);
@@ -31,10 +33,8 @@ router.get("/getList", async function (req, res) {
 
 router.post("/save", function (req, res) {
   const modifyList = req.body;
-  console.log("modifyList : ", modifyList);
 
   modifyList.map((blockData) => {
-    console.log("blockData : ", blockData);
     if (blockData.type === "delete") {
       tagBlockModel.deleteOne({ uuid: blockData.data.uuid }).exec();
     } else {

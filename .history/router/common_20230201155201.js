@@ -56,8 +56,12 @@ router.post("/upload", upload.single("img"), (req, res) => {
         extension: extension,
       });
 
-      fileData.save();
-      res.status(200).json([fileData]);
+      fileData.save().then(() => {
+        data.files = [fileData];
+        data.save();
+      });
+
+      res.status(200).json(data);
     });
 });
 

@@ -34,6 +34,7 @@ router.get("/images/:fileName", function (req, res) {
 });
 
 router.post("/upload", upload.single("img"), (req, res) => {
+  console.log("1");
   const originalName = Buffer.from(req.file.originalname, "latin1").toString(
     "utf8"
   );
@@ -44,20 +45,27 @@ router.post("/upload", upload.single("img"), (req, res) => {
     req.file.filename.length
   );
   const uuid = req.body.uuid;
-
+  console.log("2");
   tagBlockModel
     .findOne({ uuid })
     .exec()
     .then((data) => {
+      console.log("3");
       const fileData = new fileDataModel({
         fileId: fileId,
         uuid: uuid,
         fileName: originalName, //original File Name
         extension: extension,
       });
-
-      fileData.save();
-      res.status(200).json([fileData]);
+      console.log("4");
+      fileData.save().then(() => {
+        console.log("5");
+        data.files = [fileData];
+        data.save();
+      });
+      console.log("6");
+      res.status(200).json(fileData);
+      console.log("7");
     });
 });
 

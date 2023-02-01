@@ -7,11 +7,15 @@ router.get("/getList", async function (req, res) {
   const tagList = await tagBlockModel
     .find({ pathId: req.query.pathId })
     .select("-_id")
+    .sort({ sort: 1 })
     .exec();
+
+  console.log("tagList: ", tagList);
 
   let count = 0;
   const newList = [];
   tagList.map(async (data) => {
+    newList.push(data);
     if (data.tagName === "image") {
       const files = await fileDataModel
         .findOne({ uuid: data.uuid })
@@ -20,7 +24,6 @@ router.get("/getList", async function (req, res) {
       data = data.toJSON();
       data.files = [files];
     }
-    newList.push(data);
     count++;
 
     if (count === tagList.length) {

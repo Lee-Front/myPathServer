@@ -7,6 +7,7 @@ router.get("/getList", async function (req, res) {
   const tagList = await tagBlockModel
     .find({ pathId: req.query.pathId })
     .select("-_id")
+    .sort({ sort: 1 })
     .exec();
 
   let count = 0;
@@ -20,8 +21,9 @@ router.get("/getList", async function (req, res) {
       data = data.toJSON();
       data.files = [files];
     }
-    newList.push(data);
     count++;
+
+    newList.push(data);
 
     if (count === tagList.length) {
       res.status(200).send(newList);

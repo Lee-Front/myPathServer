@@ -7,21 +7,20 @@ router.get("/getList", async function (req, res) {
   const tagList = await tagBlockModel
     .find({ pathId: req.query.pathId })
     .select("-_id")
+    .sort({ sort: 1 })
     .exec();
 
   let count = 0;
   const newList = [];
   tagList.map(async (data) => {
     if (data.tagName === "image") {
-      const files = await fileDataModel
-        .findOne({ uuid: data.uuid })
-        .sort({ fileId: -1 })
-        .exec();
+      const files = await fileDataModel.find({ uuid: data.uuid }).exec();
       data = data.toJSON();
-      data.files = [files];
+      data.files = files;
     }
-    newList.push(data);
     count++;
+
+    newList.push(data);
 
     if (count === tagList.length) {
       res.status(200).send(newList);
@@ -31,6 +30,7 @@ router.get("/getList", async function (req, res) {
 
 router.post("/save", function (req, res) {
   const modifyList = req.body;
+  console.log("8");
   console.log("modifyList : ", modifyList);
 
   modifyList.map((blockData) => {
