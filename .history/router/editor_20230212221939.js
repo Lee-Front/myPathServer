@@ -23,7 +23,7 @@ router.get("/getList", async function (req, res) {
     }
 
     const styleData = await styleDataModel
-      .findOne({ uuid: data.uuid })
+      .find({ uuid: data.uuid })
       .select("-_id -uuid")
       .exec();
     data.styleData = styleData;

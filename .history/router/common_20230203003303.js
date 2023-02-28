@@ -38,16 +38,14 @@ router.post("/upload", upload.single("img"), (req, res) => {
     "utf8"
   );
 
+  console.log("req.file ; ", req.file);
   const idx = req.file.filename.lastIndexOf(".");
   const fileId = req.file.filename.substring(0, idx);
   const extension = req.file.filename.substring(
     idx + 1,
     req.file.filename.length
   );
-
   const uuid = req.body.uuid;
-  const width = req.body.width;
-  console.log("width: ", width);
 
   tagBlockModel
     .findOne({ uuid })
@@ -58,7 +56,6 @@ router.post("/upload", upload.single("img"), (req, res) => {
         uuid: uuid,
         fileName: originalName, //original File Name
         extension: extension,
-        width: width,
       });
 
       fileData.save();

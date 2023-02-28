@@ -24,9 +24,12 @@ router.get("/getList", async function (req, res) {
 
     const styleData = await styleDataModel
       .findOne({ uuid: data.uuid })
-      .select("-_id -uuid")
+      .select("-_id")
       .exec();
+    console.log("styleData: ", styleData);
     data.styleData = styleData;
+
+    console.log("data : ", data);
 
     newList.push(data);
     count++;
@@ -58,7 +61,6 @@ router.post("/save", function (req, res) {
 
 router.post("/style/save", function (req, res) {
   const data = req.body;
-
   styleDataModel
     .findOneAndUpdate(
       { uuid: req.body.uuid },
@@ -66,8 +68,6 @@ router.post("/style/save", function (req, res) {
       { new: true, upsert: true }
     )
     .exec();
-
-  res.status(200).send();
 });
 
 module.exports = router;

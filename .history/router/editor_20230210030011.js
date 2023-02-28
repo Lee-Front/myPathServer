@@ -66,8 +66,6 @@ router.post("/style/save", function (req, res) {
       { new: true, upsert: true }
     )
     .exec();
-
-  res.status(200).send();
 });
 
 module.exports = router;

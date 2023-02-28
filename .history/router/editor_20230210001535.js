@@ -58,7 +58,7 @@ router.post("/save", function (req, res) {
 
 router.post("/style/save", function (req, res) {
   const data = req.body;
-
+  console.log("data : ", data);
   styleDataModel
     .findOneAndUpdate(
       { uuid: req.body.uuid },
@@ -66,8 +66,6 @@ router.post("/style/save", function (req, res) {
       { new: true, upsert: true }
     )
     .exec();
-
-  res.status(200).send();
 });
 
 module.exports = router;

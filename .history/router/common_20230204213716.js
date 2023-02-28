@@ -23,13 +23,20 @@ router.get("/images/:fileName", function (req, res) {
   const fileId = req.params.fileName;
 
   fileDataModel.findOne({ fileId }).then((data) => {
-    fs.readFile(
+    // fs.readFile(
+    //   "./images/" + data.fileId + "." + data.extension,
+    //   function (err, data) {
+    //     res.writeHead(200, { "Context-Type": "text/html" });
+    //     res.end(data);
+    //   }
+    // );
+    const fileData = fs.readFileSync(
       "./images/" + data.fileId + "." + data.extension,
-      function (err, data) {
-        res.writeHead(200, { "Context-Type": "text/html" });
-        res.end(data);
-      }
+      "utf8"
     );
+
+    res.send({ fileData });
+    console.log("fileData: ", fileData.data.json());
   });
 });
 

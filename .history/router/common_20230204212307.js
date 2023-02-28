@@ -47,7 +47,6 @@ router.post("/upload", upload.single("img"), (req, res) => {
 
   const uuid = req.body.uuid;
   const width = req.body.width;
-  console.log("width: ", width);
 
   tagBlockModel
     .findOne({ uuid })

@@ -13,21 +13,14 @@ router.get("/getList", async function (req, res) {
   let count = 0;
   const newList = [];
   tagList.map(async (data) => {
-    data = data.toJSON();
     if (data.tagName === "image") {
       const files = await fileDataModel
         .findOne({ uuid: data.uuid })
         .sort({ fileId: -1 })
         .exec();
+      data = data.toJSON();
       data.files = [files];
     }
-
-    const styleData = await styleDataModel
-      .findOne({ uuid: data.uuid })
-      .select("-_id -uuid")
-      .exec();
-    data.styleData = styleData;
-
     newList.push(data);
     count++;
 
@@ -58,7 +51,6 @@ router.post("/save", function (req, res) {
 
 router.post("/style/save", function (req, res) {
   const data = req.body;
-
   styleDataModel
     .findOneAndUpdate(
       { uuid: req.body.uuid },
@@ -66,8 +58,6 @@ router.post("/style/save", function (req, res) {
       { new: true, upsert: true }
     )
     .exec();
-
-  res.status(200).send();
 });
 
 module.exports = router;

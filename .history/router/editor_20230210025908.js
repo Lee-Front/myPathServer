@@ -38,6 +38,7 @@ router.get("/getList", async function (req, res) {
 });
 
 router.post("/save", function (req, res) {
+  console.log("a");
   const modifyList = req.body;
 
   modifyList.map((blockData) => {
@@ -66,8 +67,6 @@ router.post("/style/save", function (req, res) {
       { new: true, upsert: true }
     )
     .exec();
-
-  res.status(200).send();
 });
 
 module.exports = router;

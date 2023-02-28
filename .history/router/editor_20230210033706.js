@@ -57,6 +57,7 @@ router.post("/save", function (req, res) {
 });
 
 router.post("/style/save", function (req, res) {
+  console.log("a");
   const data = req.body;
 
   styleDataModel

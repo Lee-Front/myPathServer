@@ -23,13 +23,17 @@ router.get("/images/:fileName", function (req, res) {
   const fileId = req.params.fileName;
 
   fileDataModel.findOne({ fileId }).then((data) => {
-    fs.readFile(
+    const fileData = fs.readFileSync(
       "./images/" + data.fileId + "." + data.extension,
+      "utf8",
       function (err, data) {
         res.writeHead(200, { "Context-Type": "text/html" });
+        console.log("data : ", data);
         res.end(data);
       }
     );
+
+    console.log("fileData: ", v);
   });
 });
 
@@ -47,7 +51,6 @@ router.post("/upload", upload.single("img"), (req, res) => {
 
   const uuid = req.body.uuid;
   const width = req.body.width;
-  console.log("width: ", width);
 
   tagBlockModel
     .findOne({ uuid })
