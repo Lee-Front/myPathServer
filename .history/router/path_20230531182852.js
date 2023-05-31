@@ -17,7 +17,7 @@ router.post("/create", function (req, res) {
 });
 
 router.get("/getList", function (req, res) {
-  console.log("getList  1");
+  console.log("getList");
   // 임시 카드목록
 
   const { userId } = req.query;
