@@ -8,6 +8,7 @@ router.post("/create", function (req, res) {
   pathCardModel.count().then((count) => {
     const pathCard = new pathCardModel({
       userId: userId,
+      pathId: count + 1,
       title,
       sort: count,
     });
