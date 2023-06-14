@@ -26,6 +26,7 @@ router.get("/images/:fileName", function (req, res) {
     fs.readFile(
       "./images/" + data.fileId + "." + data.extension,
       function (err, data) {
+        console.log("err : ", err);
         res.writeHead(200, { "Context-Type": "text/html" });
         res.end(data);
       }

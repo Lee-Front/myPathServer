@@ -30,14 +30,17 @@ router.get("/", async function (req, res) {
           as: "style",
         },
       },
+
       {
         $addFields: {
           style: { $arrayElemAt: ["$style", 0] },
         },
       },
     ]);
+    console.log("tagList: ", tagList);
     res.status(200).send(tagList);
   } catch (e) {
+    console.log("e : ", e);
     res.status(500).send(e);
   }
 });

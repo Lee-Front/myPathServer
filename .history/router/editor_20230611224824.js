@@ -22,20 +22,13 @@ router.get("/", async function (req, res) {
       {
         $lookup: {
           from: "styles",
-          let: { styleUuid: "$uuid" },
-          pipeline: [
-            { $match: { $expr: { $eq: ["$uuid", "$$styleUuid"] } } },
-            { $limit: 1 },
-          ],
+          localField: "uuid",
+          foreignField: "uuid",
           as: "style",
         },
       },
-      {
-        $addFields: {
-          style: { $arrayElemAt: ["$style", 0] },
-        },
-      },
     ]);
+    console.log("tagList: ", tagList);
     res.status(200).send(tagList);
   } catch (e) {
     res.status(500).send(e);

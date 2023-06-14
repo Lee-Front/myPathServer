@@ -21,11 +21,12 @@ const upload = multer({ storage: storage });
 
 router.get("/images/:fileName", function (req, res) {
   const fileId = req.params.fileName;
-
+  console.log("?");
   fileDataModel.findOne({ fileId }).then((data) => {
     fs.readFile(
       "./images/" + data.fileId + "." + data.extension,
       function (err, data) {
+        console.log("err : ", err);
         res.writeHead(200, { "Context-Type": "text/html" });
         res.end(data);
       }

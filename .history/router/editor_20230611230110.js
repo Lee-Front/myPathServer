@@ -36,8 +36,10 @@ router.get("/", async function (req, res) {
         },
       },
     ]);
+    console.log("tagList: ", tagList);
     res.status(200).send(tagList);
   } catch (e) {
+    console.log("e : ", e);
     res.status(500).send(e);
   }
 });

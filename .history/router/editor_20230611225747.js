@@ -8,7 +8,7 @@ router.get("/", async function (req, res) {
   try {
     const pathCard = await pathCardModel.findById(req.query.pathId);
     const pathId = pathCard._id.toString();
-
+    console.log("a");
     const tagList = await tagBlockModel.aggregate([
       { $match: { pathId } },
       {
@@ -24,20 +24,23 @@ router.get("/", async function (req, res) {
           from: "styles",
           let: { styleUuid: "$uuid" },
           pipeline: [
-            { $match: { $expr: { $eq: ["$uuid", "$$styleUuid"] } } },
+            { $match: { $expr: { $eq: ["$uuid", "$$uuid"] } } },
             { $limit: 1 },
+            {
+              $project: {
+                _id: 0,
+                style: {}, // 빈 객체로 설정합니다
+              },
+            },
           ],
           as: "style",
         },
       },
-      {
-        $addFields: {
-          style: { $arrayElemAt: ["$style", 0] },
-        },
-      },
     ]);
+    console.log("tagList: ", tagList);
     res.status(200).send(tagList);
   } catch (e) {
+    console.log("e : ", e);
     res.status(500).send(e);
   }
 });

@@ -26,16 +26,19 @@ router.get("/", async function (req, res) {
           pipeline: [
             { $match: { $expr: { $eq: ["$uuid", "$$styleUuid"] } } },
             { $limit: 1 },
+            {
+              $project: {
+                _id: 0,
+                styleField1: "$field1",
+                styleField2: "$field2",
+              },
+            },
           ],
           as: "style",
         },
       },
-      {
-        $addFields: {
-          style: { $arrayElemAt: ["$style", 0] },
-        },
-      },
     ]);
+    console.log("tagList: ", tagList);
     res.status(200).send(tagList);
   } catch (e) {
     res.status(500).send(e);
