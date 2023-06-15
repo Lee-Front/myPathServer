@@ -12,7 +12,7 @@ const styleSchema = new mongoose.Schema(
     "font-style": { type: String, required: false },
     "border-bottom": { type: String, required: false },
     "text-decoration": { type: String, required: false },
-    "text-align": { type: String, required: false },
+    textAlign: { type: String, required: false },
   },
   { timestames: true, versionKey: false }
 );
