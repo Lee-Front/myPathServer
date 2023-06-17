@@ -32,7 +32,7 @@ router.get("/", async function (req, res) {
       },
       {
         $addFields: {
-          style: { $ifNull: [{ $arrayElemAt: ["$style", 0] }, {}] },
+          style: { $arrayElemAt: ["$style", 0] },
         },
       },
     ]);
