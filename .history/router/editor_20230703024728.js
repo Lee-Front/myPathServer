@@ -62,19 +62,10 @@ router.post("/", function (req, res) {
 
 router.post("/style", function (req, res) {
   const { uuids, style } = req.body;
-  const updateActions = Object.keys(style).map((key) => {
-    const updateOperation = {};
-    if (style[key]) {
-      updateOperation["$set"] = { [key]: style[key] };
-    } else {
-      updateOperation["$unset"] = { [key]: "" };
-    }
-    return updateOperation;
-  });
-
-  uuids.forEach((uuid) => {
+  console.log({ uuids, style });
+  uuids.forEacth((uuid) => {
     styleDataModel
-      .findOneAndUpdate({ uuid }, ...updateActions, { upsert: true })
+      .findOneAndUpdate({ uuid }, { ...style }, { upsert: true })
       .exec();
   });
 
