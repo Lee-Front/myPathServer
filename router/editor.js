@@ -3,6 +3,8 @@ const router = express.Router();
 const pathCardModel = require("../models/pathCard");
 const tagBlockModel = require("../models/tagBlock");
 const styleDataModel = require("../models/styleData");
+const fs = require("fs");
+const fileData = require("../models/fileData");
 
 router.get("/", async function (req, res) {
   try {
@@ -44,14 +46,21 @@ router.get("/", async function (req, res) {
 
 router.post("/", function (req, res) {
   const modifyList = req.body;
-  modifyList.map((blockData) => {
-    if (blockData.type === "delete") {
-      tagBlockModel.deleteOne({ uuid: blockData.data.uuid }).exec();
+  modifyList.map((block) => {
+    if (block.type === "delete") {
+      tagBlockModel.deleteOne({ uuid: block.data.uuid }).exec();
+      styleDataModel.deleteOne({ uuid: block.data.uuid }).exec();
+      if (block.data.tagName === "image") {
+        fileData.findOne({ uuid: block.data.uuid }).then((file) => {
+          fs.unlinkSync(`./images/${file.fileId}.${file.extension}`);
+          fileData.deleteOne({ fileId: file.fileId }).exec();
+        });
+      }
     } else {
       tagBlockModel
         .findOneAndUpdate(
-          { uuid: blockData.data.uuid },
-          { ...blockData.data },
+          { uuid: block.data.uuid },
+          { ...block.data },
           { new: true, upsert: true }
         )
         .exec();

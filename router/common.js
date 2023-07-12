@@ -17,6 +17,7 @@ const storage = multer.diskStorage({
     });
   },
 });
+
 const upload = multer({ storage: storage });
 
 router.get("/images/:fileName", function (req, res) {
@@ -47,7 +48,6 @@ router.post("/upload", upload.single("img"), (req, res) => {
 
   const uuid = req.body.uuid;
   const width = req.body.width;
-  console.log("width: ", width);
 
   tagBlockModel
     .findOne({ uuid })
