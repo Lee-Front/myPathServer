@@ -40,6 +40,7 @@ router.put("/", function (req, res) {
 });
 
 router.get("/", function (req, res) {
+  console.log("s");
   const { userId } = req.query;
   pathCardModel.find({ userId }).then((data) => {
     res.status(200).send(data);

@@ -4,7 +4,7 @@ const pathCardModel = require("../models/pathCard");
 const tagBlockModel = require("../models/tagBlock");
 const styleData = require("../models/styleData");
 
-router.post("/", function (req, res) {
+router.post("", function (req, res) {
   const { userId, title, sort } = req.body;
   pathCardModel.count().then((count) => {
     const pathCard = new pathCardModel({
@@ -16,7 +16,7 @@ router.post("/", function (req, res) {
   });
 });
 
-router.delete("/", function (req, res) {
+router.delete("", function (req, res) {
   const { pathId } = req.query;
   pathCardModel.deleteOne({ _id: pathId }).then(() => {
     tagBlockModel.find({ pathId }).then((tagBlocks) => {
@@ -32,14 +32,15 @@ router.delete("/", function (req, res) {
   });
 });
 
-router.put("/", function (req, res) {
+router.put("", function (req, res) {
   const { pathId, title } = req.body;
   pathCardModel.updateOne({ _id: pathId }, { title }).then(() => {
     res.status(200).send();
   });
 });
 
-router.get("/", function (req, res) {
+router.get("", function (req, res) {
+  console.log("a");
   const { userId } = req.query;
   pathCardModel.find({ userId }).then((data) => {
     res.status(200).send(data);
