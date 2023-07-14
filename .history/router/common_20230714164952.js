@@ -21,9 +21,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-router.get("/health", function (req, res) {
-  res.status(200).send("health");
-});
+
 router.get("/images/:fileName", function (req, res) {
   const fileId = req.params.fileName;
 
