@@ -6,12 +6,17 @@ const app = express();
 const { PORT, MONGO_URI } = process.env;
 
 mongoose.Promise = global.Promise;
+const mongoURI =
+  process.env.NODE_ENV === "local"
+    ? MONGO_URI + "/local_myPath"
+    : MONGO_URI + "/myPath";
 
 mongoose
   .set("strictQuery", true)
-  .connect(MONGO_URI)
+  .connect(mongoURI)
   .then((response) => {
-    console.log("uri : ", MONGO_URI);
+    console.log("d : ", process.env.NODE_ENV);
+    console.log("uri : ", mongoURI);
     console.log("Successfully connect to mongodb");
   })
   .catch((e) => {
