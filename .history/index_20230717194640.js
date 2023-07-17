@@ -4,13 +4,9 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const app = express();
 const { PORT, MONGO_URI } = process.env;
-const dotenv = require("dotenv");
 
 mongoose.Promise = global.Promise;
-console.log("dotenv: ", dotenv.config());
-dotenv.config();
-
-console.log("env : ", process.env.NODE_ENV);
+dotenv.config({ path: path.join(__dirname, ".env") });
 
 mongoose
   .set("strictQuery", true)

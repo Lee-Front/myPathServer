@@ -7,10 +7,10 @@ const { PORT, MONGO_URI } = process.env;
 const dotenv = require("dotenv");
 
 mongoose.Promise = global.Promise;
-console.log("dotenv: ", dotenv.config());
-dotenv.config();
-
-console.log("env : ", process.env.NODE_ENV);
+console.log("dotenv: ", dotenv.config);
+console.log("parse: ", dotenv.parse);
+console.log("a");
+console.log("env : ", process.env);
 
 mongoose
   .set("strictQuery", true)
