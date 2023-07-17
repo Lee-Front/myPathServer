@@ -6,14 +6,14 @@ const app = express();
 const { PORT, MONGO_URI } = process.env;
 
 mongoose.Promise = global.Promise;
-const db = `${MONGO_URI}/${
+const db = `${MONGO_URL}/${
   process.env.NODE_ENV === "production" ? "myPath" : "local_myPath"
-}`;
+}"}`;
+
 mongoose
   .set("strictQuery", true)
-  .connect(db)
+  .connect(MONGO_URI)
   .then((response) => {
-    console.log("db: ", db);
     console.log("Successfully connect to mongodb");
   })
   .catch((e) => {

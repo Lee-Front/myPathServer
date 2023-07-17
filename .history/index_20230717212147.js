@@ -9,6 +9,7 @@ mongoose.Promise = global.Promise;
 const db = `${MONGO_URI}/${
   process.env.NODE_ENV === "production" ? "myPath" : "local_myPath"
 }`;
+console.log("db: ", db);
 mongoose
   .set("strictQuery", true)
   .connect(db)
