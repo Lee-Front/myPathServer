@@ -1,0 +1,39 @@
+{
+  "name": "my-path-server",
+  "version": "1.0.0",
+  "description": "my-path's api server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "pm2 start --name myapp cross-env NODE_ENV=production node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UnIStores/myPathServer.git"
+  },
+  "keywords": [
+    "api",
+    "server"
+  ],
+  "author": "lee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UnIStores/myPathServer/issues"
+  },
+  "homepage": "https://github.com/UnIStores/myPathServer#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "http-proxy-middleware": "^2.0.6",
+    "mongoose": "^6.8.2",
+    "multer": "^1.4.4-lts.1",
+    "nodemon": "^2.0.20",
+    "pm2": "^5.3.0",
+    "uuid": "^9.0.0",
+    "zustand": "^4.3.8"
+  }
+}
